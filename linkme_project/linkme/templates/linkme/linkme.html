@@ -1,0 +1,31 @@
+{% extends "linkme/base.html" %}
+{% block title %}Actor Connection{% endblock %}
+{% block content %}
+  <h2>Find Connection Between Two Actors</h2>
+  {% if error %}
+    <p class="red-text">{{ error }}</p>
+  {% endif %}
+  <form method="post" action="{% url 'connect' %}">
+    {% csrf_token %}
+    <div class="input-field">
+      <input id="first" name="first" type="text" required>
+      <label for="first">First Actor</label>
+    </div>
+    <div class="input-field">
+      <input id="second" name="second" type="text" required>
+      <label for="second">Second Actor</label>
+    </div>
+    <button type="submit" class="btn waves-effect waves-light">Find Connection</button>
+  </form>
+  
+  {% if true_path %}
+    <h3>Connection:</h3>
+    <ul class="collection">
+      {% for node in true_path %}
+        <li class="collection-item">
+          {{ node }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}
