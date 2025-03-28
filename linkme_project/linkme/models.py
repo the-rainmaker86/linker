@@ -2,6 +2,31 @@
 from collections import deque
 from django.db import models
 import re 
+import requests
+
+
+
+TMDB_API_KEY = '1a091ae4d3dab25fd731c8f5025920af'
+TMDB_BASE_URL = 'https://api.themoviedb.org/3'
+
+
+def get_movie_poster(movie_title):
+    # Query TMDb search endpoint using the movie title.
+    params = {
+        'api_key': TMDB_API_KEY,
+        'query': movie_title
+    }
+    response = requests.get(f"{TMDB_BASE_URL}/search/movie", params=params)
+    if response.status_code == 200:
+        data = response.json()
+        print('data is', data)
+        if data['results']:
+            # Use the first result's poster_path.
+            poster_path = data['results'][0].get('poster_path')
+            if poster_path:
+                return f"https://image.tmdb.org/t/p/w500{poster_path}"
+    return None
+
 
 
 def seed(num):

@@ -40,12 +40,19 @@ def connection_view(request):
             true_path = []
             for step in path:
                 if step.startswith("actor:"):
-                    actor = Actor.objects.get(id=int(step.split(':')[-1]))
-                    true_path.append({'obj': actor, 'type': 'actor'})
+                    actor_id = int(step.split(':')[-1])
+                    actor = Actor.objects.get(id=actor_id)
+                    true_path.append({"obj": actor, "type": "actor"})
                 elif step.startswith("movie:"):
-                    movie = Movie.objects.get(id=int(step.split(':')[-1]))
-                    true_path.append({'obj': movie, 'type': 'movie'})
+                    movie_id = int(step.split(':')[-1])
+                    movie = Movie.objects.get(id=movie_id)
+                    poster = get_movie_poster(movie.title)
+                    true_path.append({"obj": movie, "type": "movie", "poster": poster})
+                    print('poster url', true_path[-1]['poster'])
+                    print('step.title is', step.title)
             context["true_path"] = true_path
+            print("true path is", context['true_path'])
+            # print('poster url is', context['poster'])
         else:
             context["error"] = "No connection found."
     

@@ -28,7 +28,7 @@
     <button type="submit" class="btn waves-effect waves-light">Find Connection</button>
   </form>
   
-  {% if true_path %}
+  {% comment %} {% if true_path %}
     <h3 class="center-align">Connection:</h3>
     <div class="row">
       {% for node in true_path %}
@@ -46,5 +46,30 @@
         </div>
       {% endfor %}
     </div>
-  {% endif %}
-{% endblock %}
+  {% endif %} {% endcomment %}
+  {% if true_path %}
+  <h3 class="center-align">Connection:</h3>
+  <div class="row">
+    {% for node in true_path %}
+      <div class="col s12 m6">
+        <div class="card-panel hoverable teal lighten-4">
+          <span class="flow-text">
+            {% if node.type == "actor" %}
+              <i class="material-icons left">person</i>
+              {{ node.obj.name }}
+            {% elif node.type == "movie" %}
+              <i class="material-icons left">movie</i>
+              {{ node.obj.title }}
+              {% if node.poster %}
+                <br>
+                <img src="{{ node.poster }}" alt="{{ node.obj.title }}" class="responsive-img" style="max-height: 200px;">
+              {% endif %}
+            {% endif %}
+          </span>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+  {% endblock %}

@@ -17,6 +17,7 @@ class Linkme(models.Model):
         db_table = 'linkme'
 
 
+
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
 
