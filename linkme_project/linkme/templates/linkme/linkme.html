@@ -29,11 +29,22 @@
   </form>
   
   {% if true_path %}
-    <h3>Connection:</h3>
-    <ul class="collection">
+    <h3 class="center-align">Connection:</h3>
+    <div class="row">
       {% for node in true_path %}
-        <li class="collection-item">{{ node }}</li>
+        <div class="col s12 m6">
+          <div class="card-panel hoverable teal lighten-4">
+            <span class="flow-text">
+              {% if node.type == "actor" %}
+                <i class="material-icons left">person</i>
+              {% elif node.type == "movie" %}
+                <i class="material-icons left">movie</i>
+              {% endif %}
+              {{ node.obj }}
+            </span>
+          </div>
+        </div>
       {% endfor %}
-    </ul>
+    </div>
   {% endif %}
 {% endblock %}
